@@ -13,9 +13,7 @@ class RegistrationController extends Controller
     public function __construct(
         private RegistrationService $registrationService,
         private PaymentService $paymentService
-    ) {
-        $this->middleware('auth');
-    }
+    ) { }
 
     /**
      * Display user's registrations

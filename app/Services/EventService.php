@@ -50,6 +50,9 @@ class EventService
                 $this->deleteImage($event->image);
             }
             $data['image'] = $this->uploadImage($data['image']);
+        } else {
+            // Remove image from data if not provided to keep existing image
+            unset($data['image']);
         }
 
         $event->update($data);
