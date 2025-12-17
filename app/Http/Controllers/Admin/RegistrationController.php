@@ -12,9 +12,7 @@ class RegistrationController extends Controller
 {
     public function __construct(
         private RegistrationService $registrationService
-    ) {
-        $this->middleware(['auth', 'admin']);
-    }
+    ) { }
 
     /**
      * Display all registrations

@@ -9,9 +9,7 @@ class EventController extends Controller
 {
     public function __construct(
         private EventService $eventService
-    ) {
-        $this->middleware('auth')->except(['index', 'show']);
-    }
+    ) { }
 
     /**
      * Display list of events

@@ -12,9 +12,7 @@ class EventController extends Controller
 {
     public function __construct(
         private EventService $eventService
-    ) {
-        $this->middleware(['auth', 'admin']);
-    }
+    ) { }
 
     /**
      * Display all events
@@ -53,6 +51,11 @@ class EventController extends Controller
             'status' => ['required', 'in:active,inactive,completed'],
         ]);
 
+        // Add the image file to validated data if present
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image');
+        }
+
         try {
             $this->eventService->createEvent($validated);
 
@@ -88,6 +91,11 @@ class EventController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'status' => ['required', 'in:active,inactive,completed'],
         ]);
+
+        // Add the image file to validated data if present
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image');
+        }
 
         try {
             $this->eventService->updateEvent($event, $validated);
