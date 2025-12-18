@@ -35,21 +35,15 @@ class RegistrationController extends Controller
                 $event
             );
 
-            // If event requires payment
+            // If event requires payment, redirect to Stripe Checkout
             if (!$event->isFree()) {
-                $paymentData = $this->paymentService->createPaymentIntent($registration);
-                
-                return view('payments.checkout', [
-                    'registration' => $registration,
-                    'event' => $event,
-                    'clientSecret' => $paymentData['client_secret'],
-                    'publishableKey' => config('services.stripe.key'),
-                ]);
+                $checkoutUrl = $this->paymentService->createCheckoutSession($registration);
+                return redirect($checkoutUrl);
             }
 
             return redirect()->route('registrations.index')
                 ->with('success', 'Registration successful!');
-                
+
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

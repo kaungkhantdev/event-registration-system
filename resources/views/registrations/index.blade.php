@@ -11,7 +11,7 @@
             <div class="bg-white rounded-2xl shadow-xs p-12 text-center">
                 <i class="fas fa-ticket-alt text-6xl text-gray-400 mb-4"></i>
                 <p class="text-xl text-gray-600 mb-4">You haven't registered for any events yet.</p>
-                <a href="#events" class="inline-flex items-center justify-center py-3 px-6 rounded-full border border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center py-3 px-6 rounded-full border border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                     <i class="fas fa-calendar-alt mr-2"></i>
                     Browse Events
                 </a>
@@ -62,22 +62,34 @@
                             </div>
 
                             <div class="flex justify-between items-center">
-                                <a href="{{ route('events.show', $registration->event_id) }}" 
+                                <a href="{{ route('events.show', $registration->event_id) }}"
                                 class="text-indigo-600 hover:text-indigo-700 font-medium">
                                     View Event Details →
                                 </a>
-                                
-                                @if($registration->status === 'pending' || $registration->status === 'approved')
-                                    <form method="POST" action="{{ route('registrations.destroy', $registration->id) }}" 
-                                        onsubmit="return confirm('Are you sure you want to cancel this registration?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-700 font-medium">
-                                            <i class="fas fa-times-circle mr-1"></i>
-                                            Cancel Registration
-                                        </button>
-                                    </form>
-                                @endif
+
+                                <div class="flex items-center space-x-4">
+                                    @if(in_array($registration->payment_status, ['failed', 'pending', null]) && $registration->event->price > 0)
+                                        <form method="POST" action="{{ route('payment.retry', $registration->id) }}">
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-full transition-colors">
+                                                <i class="fas fa-redo mr-2"></i>
+                                                Retry Payment
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    @if($registration->status === 'pending' || $registration->status === 'approved')
+                                        <form method="POST" action="{{ route('registrations.destroy', $registration->id) }}"
+                                            onsubmit="return confirm('Are you sure you want to cancel this registration?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-700 font-medium">
+                                                <i class="fas fa-times-circle mr-1"></i>
+                                                Cancel Registration
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

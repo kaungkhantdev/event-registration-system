@@ -119,7 +119,7 @@
                             @if($event->isRegistrationOpen())
                                 <form method="POST" action="{{ route('registrations.store', $event) }}">
                                     @csrf
-                                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center justify-center">
+                                    <button type="submit" class="cursor-pointer w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center justify-center">
                                         <i class="fas fa-ticket-alt mr-2"></i>
                                         Register for This Event
                                     </button>

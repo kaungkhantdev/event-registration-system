@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     // Payment Routes
     Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    Route::post('/payment/retry/{registrationId}', [PaymentController::class, 'retry'])->name('payment.retry');
 });
 
 // Stripe Webhook (no CSRF protection)
