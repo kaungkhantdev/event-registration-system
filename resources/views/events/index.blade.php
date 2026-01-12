@@ -17,8 +17,8 @@
                     Find exciting events near you, register securely online, and never miss out on experiences that matter. Simple, fast, and reliable event registration.
                 </p>
                 <div class="mt-10 flex items-center justify-center gap-4 flex-wrap">
-                    <a href="#events" class="inline-flex items-center justify-center py-3 px-6 rounded-full border border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                        <i class="fas fa-calendar-alt mr-2"></i>
+                    <a href="{{ route('events.search') }}" class="inline-flex items-center justify-center py-3 px-6 rounded-full border border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fas fa-search mr-2"></i>
                         Browse Events
                     </a>
                     @guest
@@ -103,7 +103,7 @@
                 @else
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($events as $event)
-                            <div class=" group relative bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-2xl transition-all duration-500">
+                            <div class=" group relative bg-white rounded-3xl overflow-hidden shadow hover:shadow-2xl transition-all duration-500">
                                 <!-- Image Section -->
                                 <div class="relative h-56 overflow-hidden">
                                     @if($event->image)

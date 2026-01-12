@@ -57,7 +57,7 @@
             </div>
 
             <!-- Right Column: Event Info and Registration -->
-            <div class="lg:col-span-1 space-y-6">
+            <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-8 lg:self-start">
                 <!-- Event Info Card -->
                 <div class="bg-white rounded-2xl p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Event Details</h3>
@@ -119,7 +119,7 @@
                             @if($event->isRegistrationOpen())
                                 <form method="POST" action="{{ route('registrations.store', $event) }}">
                                     @csrf
-                                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center justify-center">
+                                    <button type="submit" class="cursor-pointer w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center justify-center">
                                         <i class="fas fa-ticket-alt mr-2"></i>
                                         Register for This Event
                                     </button>
