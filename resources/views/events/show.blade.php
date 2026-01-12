@@ -57,7 +57,7 @@
             </div>
 
             <!-- Right Column: Event Info and Registration -->
-            <div class="lg:col-span-1 space-y-6">
+            <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-8 lg:self-start">
                 <!-- Event Info Card -->
                 <div class="bg-white rounded-2xl p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Event Details</h3>

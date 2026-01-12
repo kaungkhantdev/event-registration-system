@@ -21,6 +21,17 @@ class EventController extends Controller
     }
 
     /**
+     * Display event search page with filters
+     */
+    public function search(Request $request)
+    {
+        $filters = $request->only(['search', 'location', 'price_type', 'date_from', 'date_to', 'availability', 'sort_by']);
+        $events = $this->eventService->searchEvents($filters);
+
+        return view('events.search', compact('events', 'filters'));
+    }
+
+    /**
      * Display event details
      */
     public function show(int $id)

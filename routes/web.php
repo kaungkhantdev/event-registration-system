@@ -20,6 +20,12 @@ Route::get('/', function () {
     return redirect()->route('events.index');
 });
 
+// Static Pages
+Route::view('/about', 'pages.about')->name('pages.about');
+Route::view('/contact', 'pages.contact')->name('pages.contact');
+Route::view('/privacy', 'pages.privacy')->name('pages.privacy');
+Route::view('/terms', 'pages.terms')->name('pages.terms');
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -32,6 +38,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 // Public Event Routes
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/search/filter', [EventController::class, 'search'])->name('events.search');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 
 // User Routes (Authenticated)

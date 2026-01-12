@@ -91,6 +91,76 @@ class EventService
     }
 
     /**
+     * Search and filter events
+     */
+    public function searchEvents(array $filters = [])
+    {
+        $query = Event::where('status', 'active')
+            ->where('registration_deadline', '>=', now());
+
+        // Search by keyword (title, description, location)
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by location
+        if (!empty($filters['location'])) {
+            $query->where('location', 'like', "%{$filters['location']}%");
+        }
+
+        // Filter by price type
+        if (!empty($filters['price_type'])) {
+            if ($filters['price_type'] === 'free') {
+                $query->where('price', 0);
+            } elseif ($filters['price_type'] === 'paid') {
+                $query->where('price', '>', 0);
+            }
+        }
+
+        // Filter by date range
+        if (!empty($filters['date_from'])) {
+            $query->where('event_date', '>=', $filters['date_from']);
+        }
+
+        if (!empty($filters['date_to'])) {
+            $query->where('event_date', '<=', $filters['date_to']);
+        }
+
+        // Filter by availability
+        if (!empty($filters['availability'])) {
+            if ($filters['availability'] === 'available') {
+                $query->whereRaw('(SELECT COUNT(*) FROM registrations WHERE event_id = events.id AND status = "approved") < max_attendees');
+            }
+        }
+
+        // Sort
+        $sortBy = $filters['sort_by'] ?? 'date';
+        switch ($sortBy) {
+            case 'date':
+                $query->orderBy('event_date', 'asc');
+                break;
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'title':
+                $query->orderBy('title', 'asc');
+                break;
+            default:
+                $query->orderBy('event_date', 'asc');
+        }
+
+        return $query->paginate(9);
+    }
+
+    /**
      * Get event statistics
      */
     public function getEventStats(Event $event): array

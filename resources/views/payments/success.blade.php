@@ -3,7 +3,7 @@
 @section('title', 'Payment Successful')
 
 @section('content')
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 flex items-center justify-center">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="bg-white rounded-2xl shadow-xs p-12 text-center">
             <div class="mb-6">
@@ -20,7 +20,7 @@
                 class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full">
                     View My Registrations
                 </a>
-                <a href="{{ route('events.index') }}" 
+                <a href="{{ route('events.search') }}" 
                 class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-full">
                     Browse More Events
                 </a>
